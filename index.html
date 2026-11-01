@@ -16,6 +16,8 @@
   .head { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
   .name, .caption { margin: 0; font-size: 15px; color: #A1A1AA; }
   .name { font-weight: 500; }
+  .caption { outline: none; cursor: text; min-width: 40px; padding: 2px 6px; border-radius: 6px; }
+  .caption:focus { background: #232326; color: #fff; }
   .total { margin: 0; font-size: 52px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.05; }
   h1 { margin: 0; font-size: 26px; font-weight: 600; text-align: center; letter-spacing: -0.5px; }
   .opts { display: flex; flex-direction: column; gap: 10px; }
@@ -43,7 +45,7 @@
   <div class="head">
     <p class="name">Raj Raina</p>
     <p class="total" id="total">$10.00</p>
-    <p class="caption" id="caption">You're welcome</p>
+    <p class="caption" id="caption" contenteditable="true" spellcheck="false" enterkeyhint="done">You're welcome</p>
   </div>
   <h1>Add a tip</h1>
   <div class="opts" id="opts"></div>
@@ -112,6 +114,9 @@
     var amt = sel === 'custom' ? custom : OPTIONS.find(function (o) { return o.id === sel; }).amt;
     location.href = 'https://venmo.com/' + VENMO_USER + '?txn=pay&amount=' + amt.toFixed(2) + '&note=' + encodeURIComponent(VENMO_NOTE);
   };
+
+  var cap = document.getElementById('caption');
+  cap.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); cap.blur(); } });
 
   document.getElementById('notip').onclick = function () { wrong.classList.add('show'); };
   render();
