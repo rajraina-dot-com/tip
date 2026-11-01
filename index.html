@@ -116,6 +116,12 @@
   };
 
   var cap = document.getElementById('caption');
+  cap.addEventListener('focus', function () {
+    setTimeout(function () {
+      var r = document.createRange(); r.selectNodeContents(cap);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }, 0);
+  });
   cap.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); cap.blur(); } });
 
   document.getElementById('notip').onclick = function () { wrong.classList.add('show'); };
